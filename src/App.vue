@@ -1,13 +1,19 @@
 <script setup lang="ts">
-import LaButton from './components/UI/LaButton/LaButton.vue';
+import { ref } from 'vue';
+import LaInput from './components/UI/LaInput/LaInput.vue';
 
+const text = ref('');
 </script>
 
 <template>
-  <div class="p-8">
-    <la-button size="xl" variation="transparent">погнали</la-button>
+  <div class="p-8 bg-dark-grey">
+    <la-input
+      v-model="text"
+      :disabled="false"
+      variation="white"
+      placeholder="введите текст"
+    />
   </div>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

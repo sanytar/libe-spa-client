@@ -7,13 +7,14 @@ export default {
     },
     extend: {
       width: {
-        '46': '11.75rem',
-        '34': '8.625rem',
-        '43.5': '10.875rem',
+        46: '11.75rem',
+        34: '8.625rem',
+        43.5: '10.875rem',
       },
       boxShadow: {
         'msd-red': '0px 4px 4px rgba(199, 57, 56, 0.3);',
         'msd-d-red': '0px 4px 4px rgba(199, 57, 56, 0.3);',
+        'md-white': '0px 0px 12px rgba(246, 246, 246, 0.3);',
       },
       colors: {
         'light-red': '#E84445',
