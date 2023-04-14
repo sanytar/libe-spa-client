@@ -33,6 +33,9 @@ export default {
         'dark-grey': '#0B1717',
         'regular-white': '#F6F6F6',
       },
+      borderRadius: {
+        '4xl': '2rem',
+      },
     },
   },
   plugins: [],
