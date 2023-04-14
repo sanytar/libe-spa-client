@@ -1,18 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import LaInput from './components/UI/LaInput/LaInput.vue';
-
-const text = ref('');
+import LaCheckbox from './components/UI/LaCheckbox/LaCheckbox.vue';
+const checked = ref(true);
 </script>
 
 <template>
-  <div class="p-8 bg-dark-grey">
-    <la-input
-      v-model="text"
-      :disabled="false"
-      variation="white"
-      placeholder="введите текст"
-    />
+  <div class="p-8">
+    <la-checkbox v-model="checked" />
   </div>
 </template>
 
