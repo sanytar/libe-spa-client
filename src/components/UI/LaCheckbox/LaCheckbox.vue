@@ -3,12 +3,10 @@ import { computed } from 'vue';
 interface Props {
   size?: string;
 }
-
 const props = withDefaults(defineProps<Props>(), {
   size: 'md',
 });
 const emit = defineEmits(['update:modelValue']);
-
 const checkboxClasses = computed(() => {
   return {
     'la-checkbox': true,
@@ -27,7 +25,6 @@ const checkmarkClasses = computed(() => {
     checkmark_xl: props.size === 'xl',
   };
 });
-
 const updateChecked = (e: Event) => {
   emit('update:modelValue', (e.target as HTMLInputElement).checked);
 };

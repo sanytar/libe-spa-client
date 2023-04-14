@@ -35,6 +35,7 @@ export default {
       },
       borderRadius: {
         '4xl': '2rem',
+        '3.5xl': '1.8rem',
       },
     },
   },
