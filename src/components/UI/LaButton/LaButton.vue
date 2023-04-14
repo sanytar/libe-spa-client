@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from '@vue/reactivity';
+import { computed } from 'vue';
 import LaSvg from '../LaSvg/LaSvg.vue';
 
 interface Props {
@@ -9,7 +9,6 @@ interface Props {
   variation?: string;
   icon?: string;
 }
-
 
 const props = withDefaults(defineProps<Props>(), {
   disabled: false,
@@ -29,20 +28,16 @@ const classList = computed(() => {
     'la-button_md': props.size === 'md',
     'la-button_lg': props.size === 'lg',
     'la-button_xl': props.size === 'xl',
-  }
+  };
 });
 
-const textVisible = computed(() => props.size !== 'xs' && props.size !== 'sm')
-
+const textVisible = computed(() => props.size !== 'xs' && props.size !== 'sm');
 </script>
 
 <template>
-  <button 
-    :class="classList" 
-    :disabled="props.disabled"
-  >
+  <button :class="classList" :disabled="props.disabled">
     <p v-if="textVisible"><slot></slot></p>
-    <la-svg v-if="!!props.icon" :name="props.icon" class="la-button__icon"/>
+    <la-svg v-if="!!props.icon" :name="props.icon" class="la-button__icon" />
   </button>
 </template>
 
@@ -55,7 +50,7 @@ const textVisible = computed(() => props.size !== 'xs' && props.size !== 'sm')
 }
 
 .la-button p {
-  @apply p-1.5 pl-0 min-w-[5.875rem]
+  @apply p-1.5 pl-0 min-w-[5.875rem];
 }
 
 .la-button .la-button__icon {
@@ -108,7 +103,6 @@ const textVisible = computed(() => props.size !== 'xs' && props.size !== 'sm')
 }
 
 .la-button_xl p {
-  @apply w-43.5
+  @apply w-43.5;
 }
-
 </style>

@@ -4,11 +4,12 @@ const props = withDefaults(defineProps<{ name?: string }>(), {
   name: '',
 });
 const currentComponent = computed(() => {
-  return defineAsyncComponent(() => import(`../../../assets/icons/${props.name}-icon.svg?component`));
+  return defineAsyncComponent(
+    () => import(`../../../assets/icons/${props.name}-icon.svg?component`)
+  );
 });
 </script>
 
-
 <template>
-    <component :is="currentComponent"/>
+  <component :is="currentComponent" />
 </template>
