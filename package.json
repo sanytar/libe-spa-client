@@ -11,8 +11,9 @@
     "format": "prettier .  --write"
   },
   "dependencies": {
+    "vite-svg-loader": "^4.0.0",
     "vue": "^3.2.47",
-    "vite-svg-loader": "^4.0.0"
+    "vue-router": "^4.1.6"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.58.0",

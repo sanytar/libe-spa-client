@@ -6,6 +6,10 @@ export default {
       sans: ['Raleway', 'sans-serif'],
     },
     extend: {
+      fontSize: {
+        '6.5xl': '4rem',
+        '3.5xl': '2rem',
+      },
       width: {
         46: '11.75rem',
         34: '8.625rem',
@@ -36,6 +40,15 @@ export default {
       borderRadius: {
         '4xl': '2rem',
         '3.5xl': '1.8rem',
+      },
+      backgroundImage: {
+        'started-page': 'url("../../assets/images/startscreen.jpg")',
+      },
+      spacing: {
+        '18': '4.5rem',
+      },
+      screens: {
+        'xs': '360px',
       },
     },
   },
