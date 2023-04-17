@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router';
 import LaButton from '../UI/LaButton/LaButton.vue';
+
+const router = useRouter();
 
 </script>
 
@@ -9,7 +12,7 @@ import LaButton from '../UI/LaButton/LaButton.vue';
       <h1>LIBA</h1>
       <h2>по-настоящему свободная музыкальная площадка</h2>
       <p>создавай, делись, слушай, будь свободен</p>
-      <la-button size="lg" icon="play">присоединиться</la-button>
+      <la-button size="lg" icon="play" @click="router.push({ name: 'login' })">присоединиться</la-button>
     </section>
   </div>
 </template>
