@@ -44,9 +44,9 @@ const textVisible = computed(() => props.size !== 'xs' && props.size !== 'sm');
 <style scoped>
 .la-button {
   @apply flex p-1.5 items-center justify-center bg-regular-red rounded-full text-regular-white border border-solid border-regular-red
-  duration-300 hover:bg-light-red hover:border-darkest-red hover:duration-300 hover:shadow-msd-red
-  active:bg-darkest-red active:border-darkest-red active:duration-300 active:shadow-msd-d-red active:scale-95 
-  disabled:bg-light-grey disabled:border-light-grey disabled:shadow-none disabled:duration-300;
+  duration-200 hover:bg-light-red hover:border-darkest-red hover:duration-200 hover:shadow-msd-red
+  active:bg-darkest-red active:border-darkest-red active:duration-200 active:shadow-msd-d-red active:scale-95 
+  disabled:bg-light-grey disabled:border-light-grey disabled:shadow-none disabled:duration-200;
 }
 
 .la-button p {
@@ -58,16 +58,16 @@ const textVisible = computed(() => props.size !== 'xs' && props.size !== 'sm');
 }
 
 .la-button:active .la-button__icon {
-  @apply -rotate-180 duration-300;
+  @apply -rotate-180 duration-200;
 }
 .la-button_active {
-  @apply bg-darkest-red border-darkest-red duration-300 hover:bg-light-red hover:duration-300
+  @apply bg-darkest-red border-darkest-red duration-200 hover:bg-light-red hover:duration-200
   hover:shadow-msd-red active:bg-regular-red active:border-regular-red active:shadow-msd-red;
 }
 
 .la-button_transparent {
-  @apply bg-transparent border-dark-grey text-dark-grey duration-300 hover:bg-transparent hover:shadow-md
-  hover:border-dark-grey hover:duration-300 active:scale-95;
+  @apply bg-transparent border-dark-grey text-dark-grey duration-200 hover:bg-transparent hover:shadow-md
+  hover:border-dark-grey hover:duration-200 active:scale-95;
 }
 
 .la-button_xs {
