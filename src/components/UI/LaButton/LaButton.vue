@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import LaSvg from '../LaSvg/LaSvg.vue';
 
 interface Props {
   disabled?: boolean;
@@ -67,7 +66,8 @@ const textVisible = computed(() => props.size !== 'xs' && props.size !== 'sm');
 
 .la-button_transparent {
   @apply bg-transparent border-dark-grey text-dark-grey duration-200 hover:bg-transparent hover:shadow-md
-  hover:border-dark-grey hover:duration-200 active:scale-95;
+  hover:border-dark-grey hover:duration-200 active:scale-95 disabled:bg-light-grey/20 disabled:border-light-grey/20
+  disabled:text-regular-grey disabled:cursor-not-allowed disabled:hover:shadow-none disabled:active:scale-100;
 }
 
 .la-button_xs {

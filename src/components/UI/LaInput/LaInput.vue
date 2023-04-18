@@ -2,14 +2,14 @@
 import { computed } from 'vue';
 
 export interface Props {
-  type?: string;
+  inputType?: string;
   placeholder?: string;
   variation?: string;
   disabled?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  type: 'input',
+  inputType: 'input',
   placeholder: '',
   variation: 'default',
   disabled: false,
@@ -21,7 +21,7 @@ const emit = defineEmits(['update:modelValue']);
 const classList = computed(() => {
   return {
     'la-input': true,
-    'la-input_textarea': props.type === 'textarea',
+    'la-input_textarea': props.inputType === 'textarea',
     'la-input_white': props.variation === 'white',
   };
 });
@@ -33,20 +33,24 @@ const updateValue = (e: Event) => {
 
 <template>
   <input
-    v-if="type === 'input'"
+    v-if="inputType === 'input'"
     :placeholder="placeholder"
     :class="classList"
     :disabled="disabled"
     type="text"
     @input="updateValue"
   />
-  <textarea :class="classList" :placeholder="placeholder"></textarea>
+  <textarea v-else :class="classList" :placeholder="placeholder"></textarea>
 </template>
 
 <style scoped>
 .la-input {
-  @apply w-full p-4 border border-solid border-dark-grey rounded-full outline-none duration-300 
-  disabled:border-light-grey disabled:text-light-grey focus:shadow-md focus:duration-300;
+  @apply w-full p-4 border border-solid bg-transparent font-medium border-dark-grey rounded-full outline-none transition-all 
+  disabled:border-light-grey disabled:text-light-grey focus:shadow-md;
+}
+
+.la-input::placeholder {
+  @apply text-regular-grey;
 }
 
 .la-input_textarea {

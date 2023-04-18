@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import LaSvg from '../UI/LaSvg/LaSvg.vue';
 import UserBar from '../UserBar/UserBar.vue';
 
 interface User {
