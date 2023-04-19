@@ -1,18 +1,8 @@
 <script setup lang="ts">
+import { useUserStore } from '../../stores/UserStore';
 import UserBar from '../UserBar/UserBar.vue';
 
-interface User {
-  id: number;
-  email: string;
-  banned: boolean;
-  banReason: string;
-  name: string;
-}
-interface Props {
-  user?: User;
-}
-
-const props = defineProps<Props>();
+const store = useUserStore();
 
 </script>
 
@@ -21,7 +11,7 @@ const props = defineProps<Props>();
     <span class="la-header__logo">
       <la-svg name="logo" />
     </span>
-    <user-bar v-if="props.user" :user="props.user" />
+    <user-bar v-if="store.isAuth" />
   </header>
 </template>
 

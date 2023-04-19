@@ -1,17 +1,8 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+import { useUserStore } from '../../stores/UserStore';
 
-
-interface User {
-  id: number;
-  email: string;
-  banned: boolean;
-  banReason: string;
-  name: string;
-}
-interface Props {
-  user: User;
-}
+const store = useUserStore();
 
 const menuTextList = [ 'добавить трек', 'профиль', 'плейлисты', 'мои треки', 'выйти' ];
 
@@ -23,14 +14,12 @@ const classList = computed(() => {
     'user-bar_opened': isMenuOpened.value,
   };
 });
-
-const props = defineProps<Props>();
 </script>
 
 <template>
   <nav :class="classList" @click="isMenuOpened = !isMenuOpened">
     <div class="user-bar__user-image"></div>
-    <p class="user-bar__user-name">{{ props.user.name }}</p>
+    <p class="user-bar__user-name">{{ store.currentUser?.email }}</p>
   </nav>
   <transition name="menu">
     <ul v-if="isMenuOpened" class="user-bar__menu">
@@ -55,7 +44,7 @@ const props = defineProps<Props>();
 }
 
 .user-bar__user-name {
-  @apply min-w-[6.5rem] text-dark-grey text-center;
+  @apply w-[6.5rem] text-dark-grey text-center overflow-hidden;
 }
 
 .user-bar__menu {

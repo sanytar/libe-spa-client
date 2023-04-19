@@ -2,12 +2,14 @@
 import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { login, registration } from '../../http/userAPI';
-// import { useUserStore } from '../../stores/UserStore';
+import { useUserStore } from '../../stores/UserStore';
+import { User } from '../../interfaces/UserInterfaces';
 
 const router = useRouter();
-// const store = useUserStore();
+const store = useUserStore();
 
 const isLoginPage = computed( () => router.currentRoute.value.name === 'login' );
+const dataError = ref<any>(null);
 
 const isCheckboxChecked = ref(false);
 
@@ -29,11 +31,21 @@ const user = ref({
 });
 
 const authorization = async () => {
+  let currentUser: User | null;
   if(isLoginPage.value) {
-    await login(user.value);
+    try {
+      currentUser = await login(user.value);
+      store.logIn(currentUser);
+      router.push({ name: 'TrackList' });
+    } catch ( error ) {
+      dataError.value = error;
+    }
+    
   } else {
     if( confirmPassword.value === user.value.password ) {
-      await registration(user.value);
+      currentUser = await registration(user.value);
+      store.logIn(currentUser);
+      router.push({ name: 'TrackList' });
     } else {
       alert('Пароли не совпадают');
     };
@@ -46,7 +58,8 @@ const authorization = async () => {
   <div class="la-modal">
     <div class="la-modal__modal-window">
       <h1>{{ isLoginPage ? 'авторизация' : 'регистрация' }}</h1>
-      <la-input v-model="user.email" placeholder="введите свой e-mail" />
+      <p v-if="dataError">{{ dataError.message }}</p>
+      <la-input v-model="user.email" :autofocus="true" placeholder="введите свой e-mail" />
       <la-input v-model="user.password" :type="inputType" :placeholder="inputPlaceholder" />
       <la-input 
         v-if="!isLoginPage" 

@@ -1,32 +1,13 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
+import { User } from '../interfaces/UserInterfaces';
 
-interface User {
-  email: string;
-  id:    number;
-  roles: Role[];
-  iat:   number;
-  exp:   number;
-}
 
-interface Role {
-  id:          number;
-  value:       string;
-  description: string;
-  createdAt:   Date;
-  updatedAt:   Date;
-  UserRoles:   UserRoles;
-}
 
-interface UserRoles {
-  id:     number;
-  roleId: number;
-  userId: number;
-}
 
 export const useUserStore = defineStore('userStore', () => {
   const currentUser = ref<User | null>(null);
-  const isAuth = ref<boolean>(true);
+  const isAuth = ref<boolean>(false);
 
   const logIn = (user: User) => {
     currentUser.value = user;
