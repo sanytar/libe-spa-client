@@ -14,6 +14,7 @@ export default {
         46: '11.75rem',
         34: '8.625rem',
         43.5: '10.875rem',
+        76: '18.75rem',
       },
       boxShadow: {
         'msd-red': '0px 4px 4px rgba(199, 57, 56, 0.3);',
