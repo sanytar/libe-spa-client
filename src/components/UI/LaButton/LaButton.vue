@@ -67,7 +67,7 @@ const textVisible = computed(() => props.size !== 'xs' && props.size !== 'sm');
 
 .la-button_transparent {
   @apply bg-transparent border-dark-grey text-dark-grey duration-200 hover:bg-transparent hover:shadow-md
-  hover:border-dark-grey hover:duration-200 active:scale-95;
+  hover:border-dark-grey hover:duration-200;
 }
 
 .la-button_xs {
@@ -79,7 +79,7 @@ const textVisible = computed(() => props.size !== 'xs' && props.size !== 'sm');
 }
 
 .la-button_sm {
-  @apply p-1.5 border-regular-white hover:border-regular-white active:scale-95;
+  @apply p-1.5 border-regular-white scale-100 hover:border-regular-white active:scale-100;
 }
 
 .la-button_sm:active .la-button__icon {

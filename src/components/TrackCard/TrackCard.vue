@@ -5,50 +5,56 @@ import LaButton from '../UI/LaButton/LaButton.vue';
 
 interface Props {
   size?: string;
+  author: string;
+  name: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   size: 'md',
 });
 
-const classList = computed(() => {
+const cardClasses = computed(() => {
   return {
     'track-card': true,
-    'track-card_xl': props.size === 'xl',
     'track-card_sm': props.size === 'sm',
   };
 });
 
+const cardInfoClasses = computed(() => {
+  return {
+    'track-card__info': true,
+    'track-card__info_lg': props.size === 'lg',
+  };
+});
+
+
 </script>
 
 <template>
-  <div :class="classList">
-    <div class="w-11 h-11 rounded-lg bg-regular-yellow"></div><!-- временная заплатка -->
-    <div class="track-card__info">
-      <h4>Колеса</h4>
-      <p>Скриптонит</p>
-      <p class="info-timeline">1:39 / 3:28</p>
+  <div :class="cardClasses">
+    <div class="w-20 h-20 rounded-lg bg-regular-yellow"></div><!-- временная заплатка -->
+    <div :class="cardInfoClasses">
+      <h4>{{ props.name }}</h4>
+      <p>{{ props.author }}</p>
+      <p v-if="size === 'lg'" class="info-timeline">1:39 / 3:28</p>
     </div>
-    <la-button icon="play" size="xs" variation="transparent"/>
+    <la-button id="button" icon="play" size="sm" variation="transparent" @click.stop/>
   </div>
 </template>
 
 <style scoped>
 .track-card {
-  @apply flex gap-3 p-3 w-fit rounded-xl bg-transparent border border-solid border-dark-red cursor-default
-  transition-all hover:bg-light-grey/10 hover:cursor-pointer;
+  @apply flex items-center gap-3 p-3 w-fit rounded-xl bg-transparent border border-solid border-dark-red cursor-default
+  transition-all hover:bg-light-grey/10 hover:cursor-pointer active:scale-98;
 }
-
-.track-card_xl {
-  @apply 
-}
-
-/* .track-card_sm {
-  @apply 
-} */
 
 .track-card__info {
-  @apply flex flex-col items-start justify-between w-20 text-regular-white;
+  @apply flex flex-col items-start justify-between w-20 h-11 text-regular-white whitespace-nowrap
+  overflow-hidden text-ellipsis;
+}
+
+.track-card__info_lg {
+  @apply w-32 h-19;
 }
 
 .track-card__info h4 {
