@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import LaSvg from '../LaSvg/LaSvg.vue';
 
 interface Option {
   id: number;

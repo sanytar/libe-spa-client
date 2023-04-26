@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import LaSvg from '../LaSvg/LaSvg.vue';
 
 interface Props {
   disabled?: boolean;
@@ -43,10 +42,8 @@ const textVisible = computed(() => props.size !== 'xs' && props.size !== 'sm');
 
 <style scoped>
 .la-button {
-  @apply flex p-1.5 items-center justify-center bg-regular-red rounded-full text-regular-white border border-solid border-regular-red
-  duration-200 hover:bg-light-red hover:border-darkest-red hover:duration-200 hover:shadow-msd-red
-  active:bg-darkest-red active:border-darkest-red active:duration-200 active:shadow-msd-d-red active:scale-95 
-  disabled:bg-light-grey disabled:border-light-grey disabled:shadow-none disabled:duration-200;
+  @apply flex p-1.5 items-center justify-center bg-orange-600 rounded-full text-white transition-all
+  hover:bg-orange-700 active:bg-orange-800 active:scale-95 disabled:bg-gray-200 disabled:text-gray-400;
 }
 
 .la-button p {
@@ -54,24 +51,24 @@ const textVisible = computed(() => props.size !== 'xs' && props.size !== 'sm');
 }
 
 .la-button .la-button__icon {
-  @apply duration-500;
+  @apply transition-all;
 }
 
 .la-button:active .la-button__icon {
-  @apply -rotate-180 duration-200;
+  @apply -rotate-180 transition-all;
 }
 .la-button_active {
-  @apply bg-darkest-red border-darkest-red duration-200 hover:bg-light-red hover:duration-200
-  hover:shadow-msd-red active:bg-regular-red active:border-regular-red active:shadow-msd-red;
+  @apply bg-orange-800 hover:bg-orange-700 active:bg-orange-600;
 }
 
 .la-button_transparent {
-  @apply bg-transparent border-dark-grey text-dark-grey duration-200 hover:bg-transparent hover:shadow-md
-  hover:border-dark-grey hover:duration-200 active:scale-95;
+  @apply bg-transparent border-black text-black hover:shadow-md active:scale-95 transition-all
+  border border-solid border-black hover:shadow-lg hover:bg-transparent disabled:bg-black/30
+  disabled:text-gray-800 disabled:hover:shadow-none disabled:active:scale-100 active:bg-transparent;
 }
 
 .la-button_xs {
-  @apply p-1 border-regular-white hover:border-regular-white active:scale-95;
+  @apply p-1 border-white hover:border-white active:scale-95;
 }
 
 .la-button_xs:active .la-button__icon {
@@ -79,7 +76,7 @@ const textVisible = computed(() => props.size !== 'xs' && props.size !== 'sm');
 }
 
 .la-button_sm {
-  @apply p-1.5 border-regular-white hover:border-regular-white active:scale-95;
+  @apply p-1.5 border-white hover:border-white active:scale-95;
 }
 
 .la-button_sm:active .la-button__icon {

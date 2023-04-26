@@ -1,19 +1,10 @@
 <script setup lang="ts">
-import LaSvg from '../UI/LaSvg/LaSvg.vue';
+import { useUserStore } from '../../stores/UserStore';
 import UserBar from '../UserBar/UserBar.vue';
 
-interface User {
-  id: number;
-  email: string;
-  banned: boolean;
-  banReason: string;
-  name: string;
-}
-interface Props {
-  user?: User;
-}
+const store = useUserStore();
 
-const props = defineProps<Props>();
+const navigationItems = ['главная', 'мои плейлисты', 'избранное'];
 
 </script>
 
@@ -22,16 +13,34 @@ const props = defineProps<Props>();
     <span class="la-header__logo">
       <la-svg name="logo" />
     </span>
-    <user-bar v-if="props.user" :user="props.user" />
+    <nav class="la-header__navigation">
+      <div 
+        v-for="(item, index) in navigationItems" 
+        :key="index" 
+        class="navigation__item"
+      >
+        <p>{{  item  }}</p>
+      </div>
+    </nav>
+    <user-bar v-if="store.isAuth" />
   </header>
 </template>
 
 <style scoped>
 .la-header {
-  @apply flex justify-between items-center px-6 h-12 bg-dark-red;
+  @apply flex justify-between items-center px-6 h-12 bg-teal-100;
 }
 
 .la-header__logo {
   @apply cursor-pointer transition-all active:scale-95;
+}
+
+.la-header__navigation {
+  @apply flex items-center h-full select-none;
+}
+
+.navigation__item {
+  @apply flex items-center h-full px-2 text-black hover:cursor-pointer transition-all
+  hover:bg-teal-200;
 }
 </style>
