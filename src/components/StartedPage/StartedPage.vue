@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-import LaButton from '../UI/LaButton/LaButton.vue';
 
 const router = useRouter();
-
 </script>
 
 <template>
@@ -12,7 +10,9 @@ const router = useRouter();
       <h1>LIBA</h1>
       <h2>по-настоящему свободная музыкальная площадка</h2>
       <p>создавай, делись, слушай, будь свободен</p>
-      <la-button size="lg" icon="play" @click="router.push({ name: 'login' })">присоединиться</la-button>
+      <la-button size="lg" icon="play" @click="router.push({ name: 'login' })"
+        >присоединиться</la-button
+      >
     </section>
   </div>
 </template>
@@ -24,7 +24,7 @@ const router = useRouter();
 }
 
 .start-page__section {
-  @apply flex flex-col justify-center items-end md:gap-4 gap-1 mt-18 w-full max-w-7xl text-right;
+  @apply flex flex-col justify-center items-start md:gap-4 gap-1 mt-18 w-full max-w-7xl;
 }
 
 .start-page__section h1 {
@@ -32,11 +32,10 @@ const router = useRouter();
 }
 
 .start-page__section h2 {
-  @apply md:text-3.5xl text-2xl;
+  @apply md:text-3.5xl text-2xl text-orange-600;
 }
 
 .start-page__section p {
-  @apply md:text-2xl text-base text-light-red;
+  @apply md:text-2xl text-base;
 }
-
 </style>

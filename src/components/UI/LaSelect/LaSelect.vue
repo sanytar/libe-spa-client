@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import LaSvg from '../LaSvg/LaSvg.vue';
 
 interface Option {
   id: number;
@@ -39,9 +38,9 @@ const optionClasses = (option: Option) => {
 };
 const placeholder = computed(() => {
   let result;
-  if(selectedOption.value) {
+  if (selectedOption.value) {
     result = selectedOption.value.name;
-  } else if(props.modelValue) {
+  } else if (props.modelValue) {
     result = props.modelValue.name;
   } else {
     result = 'Выберите';
@@ -58,15 +57,18 @@ const selectOption = (option: Option) => {
 
 <template>
   <div class="la-select">
-    <div :class="selectedOptionClasses" @click="areOptionsOpened = !areOptionsOpened">
+    <div
+      :class="selectedOptionClasses"
+      @click="areOptionsOpened = !areOptionsOpened"
+    >
       <p>{{ placeholder }}</p>
       <la-svg :class="iconClass" name="chevron" />
     </div>
     <transition name="options">
       <ul v-if="areOptionsOpened" class="la-select__options">
-        <li 
-          v-for="option in props.options" 
-          :key="option.id" 
+        <li
+          v-for="option in props.options"
+          :key="option.id"
           :class="optionClasses(option)"
           @click="selectOption(option)"
         >
@@ -75,7 +77,6 @@ const selectOption = (option: Option) => {
       </ul>
     </transition>
   </div>
-  
 </template>
 
 <style scoped>

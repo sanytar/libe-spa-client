@@ -1,34 +1,26 @@
 <script setup lang="ts">
-import LaSvg from '../UI/LaSvg/LaSvg.vue';
+import { useUserStore } from '../../stores/UserStore';
 import UserBar from '../UserBar/UserBar.vue';
+import NavBar from '../NavBar/NavBar.vue';
+import { useRouter } from 'vue-router';
 
-interface User {
-  id: number;
-  email: string;
-  banned: boolean;
-  banReason: string;
-  name: string;
-}
-interface Props {
-  user?: User;
-}
-
-const props = defineProps<Props>();
-
+const store = useUserStore();
+const router = useRouter();
 </script>
 
 <template>
   <header class="la-header">
-    <span class="la-header__logo">
+    <span class="la-header__logo" @click="router.push({ name: 'TrackList' })">
       <la-svg name="logo" />
     </span>
-    <user-bar v-if="props.user" :user="props.user" />
+    <nav-bar />
+    <user-bar v-if="store.isAuth" />
   </header>
 </template>
 
 <style scoped>
 .la-header {
-  @apply flex justify-between items-center px-6 h-12 bg-dark-red;
+  @apply flex justify-between items-center px-6 h-12 bg-teal-100;
 }
 
 .la-header__logo {
