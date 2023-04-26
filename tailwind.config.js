@@ -14,6 +14,7 @@ export default {
         46: '11.75rem',
         34: '8.625rem',
         43.5: '10.875rem',
+        100: '27.5rem',
       },
       boxShadow: {
         'msd-red': '0px 4px 4px rgba(199, 57, 56, 0.3);',
@@ -42,7 +43,7 @@ export default {
         '3.5xl': '1.8rem',
       },
       backgroundImage: {
-        'started-page': 'url("../../assets/images/startscreen.jpg")',
+        'started-page': 'url("../../assets/images/startscreen.png")',
       },
       spacing: {
         '18': '4.5rem',

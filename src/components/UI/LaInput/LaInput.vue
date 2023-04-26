@@ -50,7 +50,7 @@ const updateValue = (e: Event) => {
 }
 
 .la-input::placeholder {
-  @apply text-regular-grey;
+  @apply text-gray-400;
 }
 
 .la-input_textarea {

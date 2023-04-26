@@ -1,113 +1,82 @@
 <script setup lang="ts">
+import LaModal from '../UI/LaModal/LaModal.vue';
+import LaInput from '../UI/LaInput/LaInput.vue';
+import LaCheckbox from '../UI/LaCheckbox/LaCheckbox.vue';
+import LaButton from '../UI/LaButton/LaButton.vue';
 import { computed, ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { login, registration } from '../../http/userAPI';
+import { PotentialUser } from '../../interfaces/UserInterfaces';
+import { login } from '../../http/userAPI';
 import { useUserStore } from '../../stores/UserStore';
 import { User } from '../../interfaces/UserInterfaces';
+import { useRouter } from 'vue-router';
 
-const router = useRouter();
 const store = useUserStore();
+const router = useRouter();
 
-const isLoginPage = computed( () => router.currentRoute.value.name === 'login' );
-const dataError = ref<any>(null);
-
-const isCheckboxChecked = ref(false);
-
-const inputType = computed( () => isCheckboxChecked.value ? 'text' : 'password' );
-const buttonSize = computed( () => isLoginPage.value ? 'md' : 'xl' );
-const inputPlaceholder = computed( () => isLoginPage.value ? 'введи свой пароль' : 'придумай пароль' );
-const isButtonDisabled = computed( () => {
-  if(isLoginPage.value) {
-    return !( user.value.email !== '' && user.value.password !== '' );
-  } else {
-    return !( user.value.email !== '' && user.value.password !== '' && confirmPassword.value !== '' );
-  }
-});
-
-const confirmPassword = ref('');
-const user = ref({
+const potentialUser = ref<PotentialUser>({
   email: '',
-  password: ''
+  password: '',
 });
 
-const authorization = async () => {
-  let currentUser: User | null;
-  if(isLoginPage.value) {
-    try {
-      currentUser = await login(user.value);
-      store.logIn(currentUser);
-      router.push({ name: 'TrackList' });
-    } catch ( error ) {
-      dataError.value = error;
-    }
-    
-  } else {
-    if( confirmPassword.value === user.value.password ) {
-      currentUser = await registration(user.value);
-      store.logIn(currentUser);
-      router.push({ name: 'TrackList' });
-    } else {
-      alert('Пароли не совпадают');
-    };
+const error = ref<any>(null);
+
+const passwordVisible = ref(false);
+const inputType = computed(() => passwordVisible.value ? 'text' : 'password');
+const isButtonDisabled = computed(() => (potentialUser.value.email === '' || potentialUser.value.password === ''));
+
+const logIn = async (e: Event) => {
+  e.preventDefault();
+  try {
+    const user: User = await login(potentialUser.value);
+    store.authUser(user);
+    router.push({ name: 'TrackList'});
+  } catch (e) {
+    error.value = e;
   }
 };
 
 </script>
 
 <template>
-  <div class="la-modal">
-    <div class="la-modal__modal-window">
-      <h1>{{ isLoginPage ? 'авторизация' : 'регистрация' }}</h1>
-      <p v-if="dataError">{{ dataError.message }}</p>
-      <la-input v-model="user.email" :autofocus="true" placeholder="введите свой e-mail" />
-      <la-input v-model="user.password" :type="inputType" :placeholder="inputPlaceholder" />
-      <la-input 
-        v-if="!isLoginPage" 
-        v-model="confirmPassword" 
-        :type="inputType" 
-        placeholder="повтори пароль" 
-      />
-      <div class="modal-window__fieldset">
-        <la-checkbox v-model="isCheckboxChecked">показать пароль</la-checkbox>
-        <p v-if="isLoginPage">
-          ещё не с нами?
-          <router-link to="/registration">можем это исправить</router-link>
-        </p>
-        <p v-else>
-          уже с нами?
-          <router-link to="/login">покажи себя</router-link>
-        </p>
+  <form class="auth-form">
+    <la-modal>
+      <h1>авторизация</h1>
+      <p v-if="error" class="auth-form__error">введены неверные данные</p>
+      <div class="auth-form__inputs">
+        <la-input v-model="potentialUser.email" placeholder="введите свой e-mail" id="email"/>
+        <la-input v-model="potentialUser.password" :type="inputType" placeholder="введите свой пароль"/>
       </div>
-      <la-button 
-        :size="buttonSize"
-        variation="transparent"
-        :disabled="isButtonDisabled"
-        @click="authorization"
-      >
-        {{ isLoginPage ? 'войти' : 'зарегистрироваться' }}
-      </la-button>
-    </div>
-  </div>
+      <div class="auth-form__fieldset">
+        <la-checkbox v-model="passwordVisible">показать пароль</la-checkbox>
+        <p>ещё не с нами? <router-link to="/registration">присоединяйся</router-link></p>
+      </div>
+      <la-button :disabled="isButtonDisabled" variation="transparent" @click="logIn">войти</la-button>
+    </la-modal>
+  </form>
 </template>
 
 <style scoped>
-.la-modal {
-  @apply flex justify-center items-center absolute top-0 right-0 bottom-0 left-0 h-[100vh] bg-dark-grey;
+.auth-form {
+  @apply bg-started-page bg-center bg-cover bg-no-repeat h-[100vh];
 }
 
-.la-modal__modal-window {
-  @apply flex flex-col items-center gap-4 px-16 py-8 w-[552px] bg-dark-green rounded-4xl;
+.auth-form__error {
+  @apply text-red-600;
 }
 
-.la-modal__modal-window h1 {
-  @apply text-5xl font-semibold mb-5 select-none;
+.auth-form h1 {
+  @apply text-4xl font-semibold select-none;
 }
 
-.modal-window__fieldset {
-  @apply flex w-full justify-between text-sm select-none;
+.auth-form__inputs {
+  @apply flex flex-col gap-3 w-full;
 }
 
-.modal-window__fieldset a {
-  @apply text-lighter-yellow transition-all hover:text-regular-yellow;
+.auth-form__fieldset {
+  @apply flex justify-between items-center w-full text-sm select-none;
+}
+
+.auth-form__fieldset a {
+  @apply text-teal-400 hover:text-teal-600 transition-all;
 }
 </style>

@@ -1,14 +1,14 @@
-import { Role } from "./RoleInterfaces";
-
 export interface User {
-  email: string;
-  id:    number;
-  roles: Role[];
-  iat:   number;
-  exp:   number;
+  id: number
+  email: string
+  username: string
+  iat: number
+  exp: number
 }
 
 export interface PotentialUser {
   email: string;
+  username?: string;
   password: string;
+  confirmedPassword?: string;
 }
