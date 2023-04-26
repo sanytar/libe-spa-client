@@ -47,9 +47,9 @@ const cardInfoClasses = computed(() => {
     </div>
     <la-button 
       v-if="!(size === 'sm')" 
-      id="button" 
-      icon="play" 
-      size="sm" 
+      id="button"
+      icon="play"
+      size="sm"
       variation="transparent" 
       @click.stop
     />

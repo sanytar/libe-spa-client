@@ -35,23 +35,23 @@ const logOut = (item: string) => {
   <nav :class="classList" @click="isMenuOpened = !isMenuOpened">
     <div class="user-bar__user-image"></div>
     <p class="user-bar__user-name">{{ store.currentUser?.username }}</p>
+    <transition name="menu">
+      <ul v-if="isMenuOpened" class="user-bar__menu">
+        <li
+          v-for="(item, index) of menuTextList"
+          :key="index"
+          @click="logOut(item)"
+        >
+          <p>{{ item }}</p>
+        </li>
+      </ul>
+    </transition>
   </nav>
-  <transition name="menu">
-    <ul v-if="isMenuOpened" class="user-bar__menu">
-      <li
-        v-for="(item, index) of menuTextList"
-        :key="index"
-        @click="logOut(item)"
-      >
-        <p>{{ item }}</p>
-      </li>
-    </ul>
-  </transition>
 </template>
 
 <style scoped>
 .user-bar {
-  @apply relative z-50 flex items-center gap-2 p-2 select-none transition-all hover:bg-teal-200 
+  @apply relative flex items-center gap-2 p-2 select-none transition-all hover:bg-teal-200 
   hover:cursor-pointer;
 }
 
@@ -68,7 +68,7 @@ const logOut = (item: string) => {
 }
 
 .user-bar__menu {
-  @apply absolute z-10 right-[1.5rem] top-12 rounded-b-2xl text-center bg-teal-200 w-40 overflow-y-hidden select-none;
+  @apply absolute z-10 top-12 right-0 rounded-b-2xl text-center bg-teal-200 w-40 overflow-y-hidden select-none;
 }
 
 .user-bar__menu li {

@@ -51,8 +51,9 @@ const trackList = [
 </script>
 
 <template>
-  <span class="flex flex-col items-center">
-    <div class="track-list">
+  <span class="track-list">
+
+    <div class="track-list__tracks">
       <track-card 
         v-for="track in trackList"
         :key="track.id"
@@ -66,6 +67,10 @@ const trackList = [
 
 <style scoped>
 .track-list {
-  @apply flex md:justify-start justify-center items-start gap-2 max-w-7xl flex-wrap p-4;
+  @apply flex justify-center items-center w-full;
+}
+
+.track-list__tracks {
+  @apply flex justify-start items-start gap-2 max-w-7xl flex-wrap p-4;
 }
 </style>

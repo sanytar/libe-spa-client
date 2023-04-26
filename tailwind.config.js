@@ -6,9 +6,15 @@ export default {
       sans: ['Raleway', 'sans-serif'],
     },
     extend: {
+      scale: {
+        '98': '0.98',
+      },
       fontSize: {
         '6.5xl': '4rem',
         '3.5xl': '2rem',
+      },
+      height: {
+        '19': '4.875rem',
       },
       width: {
         46: '11.75rem',
