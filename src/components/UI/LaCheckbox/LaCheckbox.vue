@@ -36,11 +36,7 @@ const updateChecked = (e: Event) => {
 <template>
   <label :class="checkboxClasses">
     <slot />
-    <input
-      type="checkbox"
-      :checked="modelValue"
-      @change="updateChecked"
-    />
+    <input type="checkbox" :checked="modelValue" @change="updateChecked" />
     <span :class="checkmarkClasses" />
   </label>
 </template>

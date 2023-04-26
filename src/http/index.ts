@@ -14,6 +14,4 @@ $authHost.interceptors.request.use((config) => {
   return config;
 });
 
-export {
-  $host, $authHost
-};
+export { $host, $authHost };

@@ -8,12 +8,12 @@ import { createPinia } from 'pinia';
 const app = createApp(App);
 const pinia = createPinia();
 
-components.forEach(component => {
+components.forEach((component) => {
   let name: string;
-  if(component.__name) {
+  if (component.__name) {
     name = component.__name;
     app.component(name, component);
-  };
+  }
 });
 
 app.use(router).use(pinia).mount('#app');

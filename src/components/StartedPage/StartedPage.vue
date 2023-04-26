@@ -2,7 +2,6 @@
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-
 </script>
 
 <template>
@@ -11,7 +10,9 @@ const router = useRouter();
       <h1>LIBA</h1>
       <h2>по-настоящему свободная музыкальная площадка</h2>
       <p>создавай, делись, слушай, будь свободен</p>
-      <la-button size="lg" icon="play" @click="router.push({ name: 'login' })">присоединиться</la-button>
+      <la-button size="lg" icon="play" @click="router.push({ name: 'login' })"
+        >присоединиться</la-button
+      >
     </section>
   </div>
 </template>
@@ -37,5 +38,4 @@ const router = useRouter();
 .start-page__section p {
   @apply md:text-2xl text-base;
 }
-
 </style>

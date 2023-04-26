@@ -46,10 +46,10 @@ export default {
         'started-page': 'url("../../assets/images/startscreen.png")',
       },
       spacing: {
-        '18': '4.5rem',
+        18: '4.5rem',
       },
       screens: {
-        'xs': '360px',
+        xs: '360px',
       },
     },
   },

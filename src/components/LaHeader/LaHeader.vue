@@ -1,27 +1,19 @@
 <script setup lang="ts">
 import { useUserStore } from '../../stores/UserStore';
 import UserBar from '../UserBar/UserBar.vue';
+import NavBar from '../NavBar/NavBar.vue';
+import { useRouter } from 'vue-router';
 
 const store = useUserStore();
-
-const navigationItems = ['главная', 'мои плейлисты', 'избранное'];
-
+const router = useRouter();
 </script>
 
 <template>
   <header class="la-header">
-    <span class="la-header__logo">
+    <span class="la-header__logo" @click="router.push({ name: 'TrackList' })">
       <la-svg name="logo" />
     </span>
-    <nav class="la-header__navigation">
-      <div 
-        v-for="(item, index) in navigationItems" 
-        :key="index" 
-        class="navigation__item"
-      >
-        <p>{{  item  }}</p>
-      </div>
-    </nav>
+    <nav-bar />
     <user-bar v-if="store.isAuth" />
   </header>
 </template>
@@ -33,14 +25,5 @@ const navigationItems = ['главная', 'мои плейлисты', 'изб�
 
 .la-header__logo {
   @apply cursor-pointer transition-all active:scale-95;
-}
-
-.la-header__navigation {
-  @apply flex items-center h-full select-none;
-}
-
-.navigation__item {
-  @apply flex items-center h-full px-2 text-black hover:cursor-pointer transition-all
-  hover:bg-teal-200;
 }
 </style>

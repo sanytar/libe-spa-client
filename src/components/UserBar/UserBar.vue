@@ -6,7 +6,13 @@ import { useRouter } from 'vue-router';
 const store = useUserStore();
 const router = useRouter();
 
-const menuTextList = [ 'добавить трек', 'профиль', 'плейлисты', 'мои треки', 'выйти' ];
+const menuTextList = [
+  'добавить трек',
+  'профиль',
+  'плейлисты',
+  'мои треки',
+  'выйти',
+];
 
 const isMenuOpened = ref(false);
 
@@ -20,10 +26,9 @@ const classList = computed(() => {
 const logOut = (item: string) => {
   if (item === 'выйти') {
     store.logOut();
-    router.push({ name: 'login'});
+    router.push({ name: 'login' });
   }
 };
-
 </script>
 
 <template>
@@ -33,7 +38,11 @@ const logOut = (item: string) => {
   </nav>
   <transition name="menu">
     <ul v-if="isMenuOpened" class="user-bar__menu">
-      <li v-for="(item, index) of menuTextList" :key="index" @click="logOut(item)">
+      <li
+        v-for="(item, index) of menuTextList"
+        :key="index"
+        @click="logOut(item)"
+      >
         <p>{{ item }}</p>
       </li>
     </ul>

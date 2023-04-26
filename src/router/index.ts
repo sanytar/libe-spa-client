@@ -4,7 +4,6 @@ import TrackList from '../components/TrackList/TrackList.vue';
 import AuthForm from '../components/AuthForm/AuthForm.vue';
 import RegistrationForm from '../components/RegistrationForm/RegistrationForm.vue';
 
-
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -24,6 +23,16 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/tracks',
     name: 'TrackList',
+    component: TrackList,
+  },
+  {
+    path: '/playlists',
+    name: 'playlists',
+    component: TrackList,
+  },
+  {
+    path: '/tracks',
+    name: 'favorites',
     component: TrackList,
   },
 ];

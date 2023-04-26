@@ -21,20 +21,21 @@ const potentialUser = ref<PotentialUser>({
 const error = ref<any>(null);
 
 const passwordVisible = ref(false);
-const inputType = computed(() => passwordVisible.value ? 'text' : 'password');
-const isButtonDisabled = computed(() => (potentialUser.value.email === '' || potentialUser.value.password === ''));
+const inputType = computed(() => (passwordVisible.value ? 'text' : 'password'));
+const isButtonDisabled = computed(
+  () => potentialUser.value.email === '' || potentialUser.value.password === ''
+);
 
 const logIn = async (e: Event) => {
   e.preventDefault();
   try {
     const user: User = await login(potentialUser.value);
     store.authUser(user);
-    router.push({ name: 'TrackList'});
+    router.push({ name: 'TrackList' });
   } catch (e) {
     error.value = e;
   }
 };
-
 </script>
 
 <template>
@@ -43,14 +44,30 @@ const logIn = async (e: Event) => {
       <h1>авторизация</h1>
       <p v-if="error" class="auth-form__error">введены неверные данные</p>
       <div class="auth-form__inputs">
-        <la-input v-model="potentialUser.email" placeholder="введите свой e-mail" id="email"/>
-        <la-input v-model="potentialUser.password" :type="inputType" placeholder="введите свой пароль"/>
+        <la-input
+          v-model="potentialUser.email"
+          placeholder="введите свой e-mail"
+          id="email"
+        />
+        <la-input
+          v-model="potentialUser.password"
+          :type="inputType"
+          placeholder="введите свой пароль"
+        />
       </div>
       <div class="auth-form__fieldset">
         <la-checkbox v-model="passwordVisible">показать пароль</la-checkbox>
-        <p>ещё не с нами? <router-link to="/registration">присоединяйся</router-link></p>
+        <p>
+          ещё не с нами?
+          <router-link to="/registration">присоединяйся</router-link>
+        </p>
       </div>
-      <la-button :disabled="isButtonDisabled" variation="transparent" @click="logIn">войти</la-button>
+      <la-button
+        :disabled="isButtonDisabled"
+        variation="transparent"
+        @click="logIn"
+        >войти</la-button
+      >
     </la-modal>
   </form>
 </template>
