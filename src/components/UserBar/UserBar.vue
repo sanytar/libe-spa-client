@@ -72,11 +72,11 @@ const logOut = (item: string) => {
 }
 
 .user-bar__menu li {
-  @apply cursor-pointer p-2 hover:bg-teal-300;
+  @apply cursor-pointer hover:bg-teal-300;
 }
 
 .user-bar__menu li p {
-  @apply active:scale-95;
+  @apply p-2 active:scale-95;
 }
 
 .menu-enter-active,
