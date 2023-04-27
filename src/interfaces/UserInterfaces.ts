@@ -6,9 +6,14 @@ export interface User {
   exp: number;
 }
 
-export interface PotentialUser {
+export interface AuthForm {
   email: string;
-  username?: string;
   password: string;
-  confirmedPassword?: string;
+}
+
+export interface RegistrationForm {
+  email: string;
+  username: string;
+  password: string;
+  confirmedPassword: string;
 }

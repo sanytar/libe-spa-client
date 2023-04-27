@@ -5,7 +5,7 @@ import LaCheckbox from '../UI/LaCheckbox/LaCheckbox.vue';
 import LaButton from '../UI/LaButton/LaButton.vue';
 import LaError from '../UI/LaError/LaError.vue';
 import { computed, ref } from 'vue';
-import { PotentialUser } from '../../interfaces/UserInterfaces';
+import { AuthForm } from '../../interfaces/UserInterfaces';
 import { login } from '../../http/userAPI';
 import { useUserStore } from '../../stores/UserStore';
 import { User } from '../../interfaces/UserInterfaces';
@@ -25,27 +25,26 @@ const rules = {
   },
 };
 
-const potentialUser = ref<PotentialUser>({
+const authForm = ref<AuthForm>({
   email: '',
   password: '',
 });
 
-const v$ = useVuelidate(rules, potentialUser.value);
+const v$ = useVuelidate(rules, authForm.value);
 
-// const validateErrors = ref<ErrorObject[] | null>(null);
 const errorMessage = ref('');
 
 const passwordVisible = ref(false);
 const inputType = computed(() => (passwordVisible.value ? 'text' : 'password'));
 const isButtonDisabled = computed(
-  () => potentialUser.value.email === '' || potentialUser.value.password === ''
+  () => authForm.value.email === '' || authForm.value.password === ''
 );
 
 const logIn = async () => {
   const result = await v$.value.$validate();
   if (result) {
     try {
-      const user: User = await login(potentialUser.value);
+      const user: User = await login(authForm.value);
       store.authUser(user);
       router.push({ name: 'TrackList' });
     } catch (e) {
@@ -64,17 +63,17 @@ const logIn = async () => {
       <div class="auth-form__inputs">
         <la-input
           id="email"
-          v-model="potentialUser.email"
+          v-model="authForm.email"
           placeholder="введите свой e-mail"
         />
         <la-input
-          v-model="potentialUser.password"
+          v-model="authForm.password"
           :type="inputType"
           placeholder="введите свой пароль"
         />
       </div>
       <span v-if="v$.$errors[0]" class="auth-form__validate-errors">
-        <transition-group name="list" tag="p">
+        <transition-group name="list" tag="div">
           <div
             v-for="error in v$.$errors" 
             :key="error.$uid"
@@ -120,7 +119,7 @@ const logIn = async () => {
 }
 
 .auth-form__validate-errors {
-  @apply flex items-center w-full h-32 px-6 py-2 rounded-3xl bg-red-800/10  text-red-600 ;
+  @apply flex items-center w-full h-32 px-6 py-2 rounded-3xl bg-red-800/10  text-red-600;
 }
 
 .auth-form__fieldset {
