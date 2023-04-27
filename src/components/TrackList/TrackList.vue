@@ -52,12 +52,11 @@ const trackList = [
 
 <template>
   <span class="track-list">
-
     <div class="track-list__tracks">
-      <track-card 
+      <track-card
         v-for="track in trackList"
         :key="track.id"
-        :author="track.author" 
+        :author="track.author"
         :name="track.name"
         size="lg"
       />

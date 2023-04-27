@@ -52,11 +52,11 @@ const logOut = (item: string) => {
 <style scoped>
 .user-bar {
   @apply relative flex items-center gap-2 p-2 select-none transition-all hover:bg-teal-200 
-  hover:cursor-pointer;
+  hover:cursor-pointer active:bg-teal-300;
 }
 
 .user-bar_opened {
-  @apply bg-teal-200 transition-all;
+  @apply bg-teal-300 transition-all hover:bg-teal-300;
 }
 
 .user-bar__user-image {
@@ -68,11 +68,11 @@ const logOut = (item: string) => {
 }
 
 .user-bar__menu {
-  @apply absolute z-10 top-12 right-0 rounded-b-2xl text-center bg-teal-200 w-40 overflow-y-hidden select-none;
+  @apply absolute z-10 top-12 right-0 rounded-b-2xl text-center bg-teal-300 w-40 overflow-y-hidden select-none;
 }
 
 .user-bar__menu li {
-  @apply cursor-pointer hover:bg-teal-300;
+  @apply cursor-pointer hover:bg-teal-200;
 }
 
 .user-bar__menu li p {

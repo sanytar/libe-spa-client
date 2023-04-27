@@ -5,8 +5,9 @@ import LaLoader from './components/UI/LaLoader/LaLoader.vue';
 import { check } from './http/userAPI';
 import { onMounted, ref } from 'vue';
 import { AxiosError } from 'axios';
-import router from './router';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const store = useUserStore();
 
 const isLoading = ref(true);
@@ -17,9 +18,13 @@ onMounted(async () => {
       const user = await check();
       store.authUser(user);
       isLoading.value = false;
+      if (router.currentRoute.value.name === 'StartedPage') {
+        router.push({ name: 'TrackList' });
+      }
     } catch (e) {
       const error = e as AxiosError;
       alert(error.response?.data.massage);
+      localStorage.removeItem('token');
       isLoading.value = false;
       router.push({ name: 'login' });
     }

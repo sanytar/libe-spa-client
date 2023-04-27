@@ -11,15 +11,28 @@ import { useUserStore } from '../../stores/UserStore';
 import { User } from '../../interfaces/UserInterfaces';
 import { useRouter } from 'vue-router';
 import { AxiosError } from 'axios';
+import { useVuelidate } from '@vuelidate/core';
+import { required, email, minLength } from '@vuelidate/validators';
 
 const store = useUserStore();
 const router = useRouter();
+
+const rules = {
+  email: { required, email },
+  password: { 
+    required,
+    minLength: minLength(4),
+  },
+};
 
 const potentialUser = ref<PotentialUser>({
   email: '',
   password: '',
 });
 
+const v$ = useVuelidate(rules, potentialUser.value);
+
+// const validateErrors = ref<ErrorObject[] | null>(null);
 const errorMessage = ref('');
 
 const passwordVisible = ref(false);
@@ -29,13 +42,16 @@ const isButtonDisabled = computed(
 );
 
 const logIn = async () => {
-  try {
-    const user: User = await login(potentialUser.value);
-    store.authUser(user);
-    router.push({ name: 'TrackList' });
-  } catch (e) {
-    const error = e as AxiosError;
-    errorMessage.value = error.response?.data.message;
+  const result = await v$.value.$validate();
+  if (result) {
+    try {
+      const user: User = await login(potentialUser.value);
+      store.authUser(user);
+      router.push({ name: 'TrackList' });
+    } catch (e) {
+      const error = e as AxiosError;
+      errorMessage.value = error.response?.data.message;
+    }
   }
 };
 </script>
@@ -57,6 +73,16 @@ const logIn = async () => {
           placeholder="введите свой пароль"
         />
       </div>
+      <span v-if="v$.$errors[0]" class="auth-form__validate-errors">
+        <transition-group name="list" tag="p">
+          <div
+            v-for="error in v$.$errors" 
+            :key="error.$uid"
+          >
+            {{ error.$property }} - {{ error.$message }}
+          </div>
+        </transition-group>
+      </span>
       <div class="auth-form__fieldset">
         <la-checkbox v-model="passwordVisible">показать пароль</la-checkbox>
         <p>
@@ -93,11 +119,36 @@ const logIn = async () => {
   @apply flex flex-col gap-3 w-full;
 }
 
+.auth-form__validate-errors {
+  @apply flex items-center w-full h-32 px-6 py-2 rounded-3xl bg-red-800/10  text-red-600 ;
+}
+
 .auth-form__fieldset {
   @apply flex justify-between items-center w-full text-sm select-none;
 }
 
 .auth-form__fieldset a {
   @apply text-teal-400 hover:text-teal-600 transition-all;
+}
+
+.invalid-input {
+  @apply border-red-600;
+}
+
+.list-enter-active {
+  transition: all 0.5s;
+}
+
+.list-leave-active {
+  transition: all 0.15s;
+}
+.list-enter-from {
+  opacity: 0;
+  transform: translateX(4rem);
+}
+
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(-4rem);
 }
 </style>

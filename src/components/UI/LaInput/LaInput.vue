@@ -46,7 +46,7 @@ const updateValue = (e: Event) => {
 <style scoped>
 .la-input {
   @apply w-full p-4 border border-solid bg-transparent font-medium border-dark-grey rounded-full outline-none transition-all 
-  disabled:border-light-grey disabled:text-light-grey focus:shadow-md;
+  disabled:border-light-grey disabled:text-light-grey focus:shadow-md invalid:border-red-600;
 }
 
 .la-input::placeholder {

@@ -2,7 +2,6 @@
 import { computed } from 'vue';
 import LaButton from '../UI/LaButton/LaButton.vue';
 
-
 interface Props {
   size?: string;
   author: string;
@@ -33,24 +32,23 @@ const cardInfoClasses = computed(() => {
     'track-card__info_lg': props.size === 'lg',
   };
 });
-
-
 </script>
 
 <template>
   <div :class="cardClasses">
-    <div :class="cardCoverClasses"></div><!-- временная заплатка -->
+    <div :class="cardCoverClasses"></div>
+    <!-- временная заплатка -->
     <div :class="cardInfoClasses">
       <h4>{{ props.name }}</h4>
       <p>{{ props.author }}</p>
       <p v-if="size === 'lg'" class="info-timeline">1:39 / 3:28</p>
     </div>
-    <la-button 
-      v-if="!(size === 'sm')" 
+    <la-button
+      v-if="!(size === 'sm')"
       id="button"
       icon="play"
       size="sm"
-      variation="transparent" 
+      variation="transparent"
       @click.stop
     />
   </div>
@@ -67,7 +65,7 @@ const cardInfoClasses = computed(() => {
 }
 
 .track-card__cover {
-  @apply w-11 h-11 rounded-lg bg-regular-yellow;
+  @apply w-11 h-11 rounded-lg bg-teal-200;
 }
 
 .track-card__cover_lg {
