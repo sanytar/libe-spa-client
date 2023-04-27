@@ -9,7 +9,6 @@ import { useRouter } from 'vue-router';
 import { registration } from '../../http/userAPI';
 import { RegistrationForm, User } from '../../interfaces/UserInterfaces';
 import { useUserStore } from '../../stores/UserStore';
-import { AxiosError } from 'axios';
 import { useVuelidate } from '@vuelidate/core';
 import { required, email, minLength, sameAs } from '@vuelidate/validators';
 
@@ -54,9 +53,8 @@ const registrateUser = async () => {
       const user: User = await registration(registrationForm.value);
       store.authUser(user);
       router.push({ name: 'TrackList' });
-    } catch (e) {
-      const error = e as AxiosError;
-      errorMessage.value = error.response?.data.message;
+    } catch (e: any) {
+      errorMessage.value = e.response?.data.message;
     }
   }
 };
