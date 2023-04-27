@@ -3,12 +3,14 @@ import LaModal from '../UI/LaModal/LaModal.vue';
 import LaInput from '../UI/LaInput/LaInput.vue';
 import LaCheckbox from '../UI/LaCheckbox/LaCheckbox.vue';
 import LaButton from '../UI/LaButton/LaButton.vue';
+import LaError from '../UI/LaError/LaError.vue';
 import { computed, ref } from 'vue';
 import { PotentialUser } from '../../interfaces/UserInterfaces';
 import { login } from '../../http/userAPI';
 import { useUserStore } from '../../stores/UserStore';
 import { User } from '../../interfaces/UserInterfaces';
 import { useRouter } from 'vue-router';
+import { AxiosError } from 'axios';
 
 const store = useUserStore();
 const router = useRouter();
@@ -18,7 +20,7 @@ const potentialUser = ref<PotentialUser>({
   password: '',
 });
 
-const error = ref<any>(null);
+const errorMessage = ref('');
 
 const passwordVisible = ref(false);
 const inputType = computed(() => (passwordVisible.value ? 'text' : 'password'));
@@ -26,14 +28,14 @@ const isButtonDisabled = computed(
   () => potentialUser.value.email === '' || potentialUser.value.password === ''
 );
 
-const logIn = async (e: Event) => {
-  e.preventDefault();
+const logIn = async () => {
   try {
     const user: User = await login(potentialUser.value);
     store.authUser(user);
     router.push({ name: 'TrackList' });
   } catch (e) {
-    error.value = e;
+    const error = e as AxiosError;
+    errorMessage.value = error.response?.data.message;
   }
 };
 </script>
@@ -42,12 +44,12 @@ const logIn = async (e: Event) => {
   <form class="auth-form">
     <la-modal>
       <h1>авторизация</h1>
-      <p v-if="error" class="auth-form__error">введены неверные данные</p>
+      <la-error v-if="errorMessage">{{ errorMessage }}</la-error>
       <div class="auth-form__inputs">
         <la-input
+          id="email"
           v-model="potentialUser.email"
           placeholder="введите свой e-mail"
-          id="email"
         />
         <la-input
           v-model="potentialUser.password"
@@ -65,8 +67,10 @@ const logIn = async (e: Event) => {
       <la-button
         :disabled="isButtonDisabled"
         variation="transparent"
-        @click="logIn"
-        >войти</la-button
+        @click.prevent="logIn"
+        >
+          войти
+        </la-button
       >
     </la-modal>
   </form>

@@ -5,7 +5,6 @@ const $host = axios.create({
 });
 
 const $authHost = axios.create({
-  withCredentials: true,
   baseURL: 'http://localhost:3000/',
 });
 

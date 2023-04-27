@@ -3,11 +3,13 @@ import LaModal from '../UI/LaModal/LaModal.vue';
 import LaInput from '../UI/LaInput/LaInput.vue';
 import LaCheckbox from '../UI/LaCheckbox/LaCheckbox.vue';
 import LaButton from '../UI/LaButton/LaButton.vue';
+import LaError from '../UI/LaError/LaError.vue';
 import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { registration } from '../../http/userAPI';
 import { PotentialUser, User } from '../../interfaces/UserInterfaces';
 import { useUserStore } from '../../stores/UserStore';
+import { AxiosError } from 'axios';
 
 const store = useUserStore();
 const router = useRouter();
@@ -19,7 +21,7 @@ const potentialUser = ref<PotentialUser>({
   confirmedPassword: '',
 });
 
-const error = ref<any>(null);
+const errorMessage = ref('');
 
 const passwordVisible = ref(false);
 const inputType = computed(() => (passwordVisible.value ? 'text' : 'password'));
@@ -32,8 +34,7 @@ const isButtonDisabled = computed(() => {
   return result;
 });
 
-const registrateUser = async (e: Event) => {
-  e.preventDefault();
+const registrateUser = async () => {
   try {
     if (
       potentialUser.value.password === potentialUser.value.confirmedPassword
@@ -42,10 +43,11 @@ const registrateUser = async (e: Event) => {
       store.authUser(user);
       router.push({ name: 'TrackList' });
     } else {
-      throw new Error();
+      errorMessage.value = 'Пароли не совпадают';
     }
   } catch (e) {
-    error.value = e;
+    const error = e as AxiosError;
+    errorMessage.value = error.response?.data.message;
   }
 };
 </script>
@@ -54,7 +56,7 @@ const registrateUser = async (e: Event) => {
   <form class="auth-form">
     <la-modal>
       <h1>регистрация</h1>
-      <p v-if="error" class="auth-form__error">введены неверные данные</p>
+      <la-error v-if="errorMessage">{{ errorMessage }}</la-error>
       <div class="auth-form__inputs">
         <la-input
           v-model="potentialUser.email"
@@ -83,7 +85,7 @@ const registrateUser = async (e: Event) => {
         :disabled="isButtonDisabled"
         variation="transparent"
         size="xl"
-        @click="registrateUser"
+        @click.prevent="registrateUser"
       >
         зарегистрироваться
       </la-button>
