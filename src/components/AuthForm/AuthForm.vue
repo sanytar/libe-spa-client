@@ -16,27 +16,27 @@ import { required, email, minLength } from '@vuelidate/validators';
 const store = useUserStore();
 const router = useRouter();
 
-const rules = {
-  email: { required, email },
-  password: { 
-    required,
-    minLength: minLength(4),
-  },
-};
-
 const authForm = ref<AuthForm>({
   email: '',
   password: '',
 });
 
+const rules = {
+  email: { required, email },
+  password: {
+    required,
+    minLength: minLength(4),
+  },
+};
 const v$ = useVuelidate(rules, authForm.value);
 
 const errorMessage = ref('');
 
 const passwordVisible = ref(false);
 const inputType = computed(() => (passwordVisible.value ? 'text' : 'password'));
-const isButtonDisabled = computed(
-  () => authForm.value.email === '' || authForm.value.password === ''
+const isButtonDisabled = computed(() => {
+  return (authForm.value.email === '' || authForm.value.password === '');
+}
 );
 
 const logIn = async () => {
@@ -54,7 +54,7 @@ const logIn = async () => {
 </script>
 
 <template>
-  <form class="auth-form">
+  <form class="auth-form" @submit.prevent="logIn">
     <la-modal>
       <h1>авторизация</h1>
       <la-error v-if="errorMessage">{{ errorMessage }}</la-error>
@@ -72,10 +72,7 @@ const logIn = async () => {
       </div>
       <span v-if="v$.$errors[0]" class="auth-form__validate-errors">
         <transition-group name="list" tag="div">
-          <div
-            v-for="error in v$.$errors" 
-            :key="error.$uid"
-          >
+          <div v-for="error in v$.$errors" :key="error.$uid">
             {{ error.$property }} - {{ error.$message }}
           </div>
         </transition-group>
@@ -90,11 +87,9 @@ const logIn = async () => {
       <la-button
         :disabled="isButtonDisabled"
         variation="transparent"
-        @click.prevent="logIn"
-        >
-          войти
-        </la-button
       >
+        войти
+      </la-button>
     </la-modal>
   </form>
 </template>
@@ -117,7 +112,11 @@ const logIn = async () => {
 }
 
 .auth-form__validate-errors {
-  @apply flex items-center w-full h-32 px-6 py-2 rounded-3xl bg-red-800/10  text-red-600;
+  @apply flex flex items-center w-full px-6 py-2 rounded-3xl bg-red-800/10  text-red-600;
+}
+
+.auth-form__validate-errors div {
+  @apply pb-1 border-b border-red-600 last:border-none last:pb-0;
 }
 
 .auth-form__fieldset {
@@ -125,27 +124,21 @@ const logIn = async () => {
 }
 
 .auth-form__fieldset a {
-  @apply text-teal-400 hover:text-teal-600 transition-all;
-}
-
-.invalid-input {
-  @apply border-red-600;
+  @apply text-teal-600 hover:text-teal-400 transition-all;
 }
 
 .list-enter-active {
-  transition: all 0.5s;
+  @apply transition-all duration-500;
 }
 
 .list-leave-active {
-  transition: all 0.15s;
+  @apply transition-all;
 }
 .list-enter-from {
-  opacity: 0;
-  transform: translateX(4rem);
+  @apply opacity-0 translate-x-16;
 }
 
 .list-leave-to {
-  opacity: 0;
-  transform: translateX(-4rem);
+  @apply opacity-0 -translate-x-16;
 }
 </style>

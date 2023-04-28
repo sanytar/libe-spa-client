@@ -36,8 +36,7 @@ const cardInfoClasses = computed(() => {
 
 <template>
   <div :class="cardClasses">
-    <div :class="cardCoverClasses"></div>
-    <!-- временная заплатка -->
+    <span :class="cardCoverClasses"></span>
     <div :class="cardInfoClasses">
       <h4>{{ props.name }}</h4>
       <p>{{ props.author }}</p>

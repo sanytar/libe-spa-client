@@ -5,17 +5,17 @@ const router = useRouter();
 
 const navigationItems = [
   {
-    id: 'main',
+    id: 1,
     name: 'главная',
     routeName: 'TrackList',
   },
   {
-    id: 'playlists',
+    id: 2,
     name: 'мои плейлисты',
     routeName: 'playlists',
   },
   {
-    id: 'favorites',
+    id: 3,
     name: 'избранное',
     routeName: 'favorites',
   },

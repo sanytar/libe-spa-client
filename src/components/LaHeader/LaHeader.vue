@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { useUserStore } from '../../stores/UserStore';
 import UserBar from '../UserBar/UserBar.vue';
 import NavBar from '../NavBar/NavBar.vue';
+import LaSvg from '../UI/LaSvg/LaSvg.vue';
 import { useRouter } from 'vue-router';
 
-const store = useUserStore();
 const router = useRouter();
 </script>
 
@@ -15,7 +14,7 @@ const router = useRouter();
         <la-svg name="logo" />
       </span>
       <nav-bar />
-      <user-bar v-if="store.isAuth" />
+      <user-bar /> 
     </div>
   </header>
 </template>

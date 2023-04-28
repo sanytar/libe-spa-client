@@ -1,6 +1,8 @@
 <template>
   <div class="la-error">
-    <p><slot></slot></p>
+    <p>
+      <slot />
+    </p>
   </div>
 </template>
 

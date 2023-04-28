@@ -25,9 +25,11 @@ const registrationForm = ref<RegistrationForm>({
 const rules = computed(() => {
   return {
     email: { required, email },
-    username: { required, minLength: minLength(4), },
-    password: { required, minLength: minLength(8), },
-    confirmedPassword: { required, sameAs: sameAs(registrationForm.value.password), }
+    username: { required, minLength: minLength(4) },
+    password: { required, minLength: minLength(8) },
+    confirmedPassword: {
+      sameAs: sameAs(registrationForm.value.password),
+    },
   };
 });
 
@@ -40,8 +42,7 @@ const inputType = computed(() => (passwordVisible.value ? 'text' : 'password'));
 const isButtonDisabled = computed(() => {
   let result;
   for (const key in registrationForm.value) {
-    result =
-      registrationForm.value[key as keyof RegistrationForm] === '' ? true : false;
+    result = registrationForm.value[key as keyof RegistrationForm] === '';
   }
   return result;
 });
@@ -61,7 +62,7 @@ const registrateUser = async () => {
 </script>
 
 <template>
-  <form class="registration-form">
+  <form class="registration-form" @submit.prevent="registrateUser">
     <la-modal>
       <h1>регистрация</h1>
       <la-error v-if="errorMessage">{{ errorMessage }}</la-error>
@@ -87,10 +88,7 @@ const registrateUser = async () => {
       </div>
       <span v-if="v$.$errors[0]" class="registration-form__validate-errors">
         <transition-group name="list" tag="div">
-          <div
-            v-for="error in v$.$errors" 
-            :key="error.$uid"
-          >
+          <div v-for="error in v$.$errors" :key="error.$uid">
             {{ error.$property }} - {{ error.$message }}
           </div>
         </transition-group>
@@ -103,7 +101,6 @@ const registrateUser = async () => {
         :disabled="isButtonDisabled"
         variation="transparent"
         size="xl"
-        @click.prevent="registrateUser"
       >
         зарегистрироваться
       </la-button>
@@ -141,23 +138,21 @@ const registrateUser = async () => {
 }
 
 .registration-form__fieldset a {
-  @apply text-teal-400 hover:text-teal-600 transition-all;
+  @apply text-teal-600 hover:text-teal-400 transition-all;
 }
 
 .list-enter-active {
-  transition: all 0.5s;
+  @apply transition-all duration-500;
 }
 
 .list-leave-active {
-  transition: all 0.15s;
+  @apply transition-all;
 }
 .list-enter-from {
-  opacity: 0;
-  transform: translateX(4rem);
+  @apply opacity-0 translate-x-16;
 }
 
 .list-leave-to {
-  opacity: 0;
-  transform: translateX(-4rem);
+  @apply opacity-0 -translate-x-16;
 }
 </style>

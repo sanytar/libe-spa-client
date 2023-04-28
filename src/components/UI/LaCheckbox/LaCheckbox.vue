@@ -1,15 +1,17 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, defineProps, defineEmits } from 'vue';
 
 interface Props {
   size?: string;
   modelValue: boolean;
 }
+
 const props = withDefaults(defineProps<Props>(), {
   size: 'md',
   modelValue: false,
 });
 const emit = defineEmits(['update:modelValue']);
+
 const checkboxClasses = computed(() => {
   return {
     'la-checkbox': true,
@@ -28,6 +30,7 @@ const checkmarkClasses = computed(() => {
     checkmark_xl: props.size === 'xl',
   };
 });
+
 const updateChecked = (e: Event) => {
   emit('update:modelValue', (e.target as HTMLInputElement).checked);
 };
@@ -37,7 +40,7 @@ const updateChecked = (e: Event) => {
   <label :class="checkboxClasses">
     <slot />
     <input type="checkbox" :checked="modelValue" @change="updateChecked" />
-    <span :class="checkmarkClasses" />
+    <div :class="checkmarkClasses" />
   </label>
 </template>
 
