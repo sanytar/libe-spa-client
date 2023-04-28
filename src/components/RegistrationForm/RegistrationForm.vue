@@ -53,9 +53,9 @@ const registrateUser = async () => {
     try {
       const user: User = await registration(registrationForm.value);
       store.authUser(user);
-      router.push({ name: 'TrackList' });
-    } catch (e: any) {
-      errorMessage.value = e.response?.data.message;
+      router.push({ name: 'track-list' });
+    } catch (e) {
+      errorMessage.value = e as string;
     }
   }
 };
@@ -64,9 +64,11 @@ const registrateUser = async () => {
 <template>
   <form class="registration-form" @submit.prevent="registrateUser">
     <la-modal>
-      <h1>регистрация</h1>
-      <la-error v-if="errorMessage">{{ errorMessage }}</la-error>
-      <div class="registration-form__inputs">
+      <template #header>регистрация</template>
+      <template #error>
+        <la-error v-if="errorMessage">{{ errorMessage }}</la-error>
+      </template>
+      <template #inputs>
         <la-input
           v-model="registrationForm.email"
           placeholder="введите свой e-mail"
@@ -85,36 +87,38 @@ const registrateUser = async () => {
           placeholder="повторите пароль"
           :type="inputType"
         />
-      </div>
-      <span v-if="v$.$errors[0]" class="registration-form__validate-errors">
-        <transition-group name="list" tag="div">
-          <div v-for="error in v$.$errors" :key="error.$uid">
-            {{ error.$property }} - {{ error.$message }}
-          </div>
-        </transition-group>
-      </span>
-      <div class="registration-form__fieldset">
-        <la-checkbox v-model="passwordVisible">показать пароль</la-checkbox>
-        <p>уже есть аккаунт? <router-link to="/login">войти</router-link></p>
-      </div>
-      <la-button
-        :disabled="isButtonDisabled"
-        variation="transparent"
-        size="xl"
-      >
-        зарегистрироваться
-      </la-button>
+      </template>
+      <template #validate-errors>
+        <span v-if="v$.$errors[0]" class="registration-form__validate-errors">
+          <transition-group name="list" tag="div">
+            <div v-for="error in v$.$errors" :key="error.$uid">
+              {{ error.$property }} - {{ error.$message }}
+            </div>
+          </transition-group>
+        </span>
+      </template>
+      <template #fieldset>
+        <div class="registration-form__fieldset">
+          <la-checkbox v-model="passwordVisible">показать пароль</la-checkbox>
+          <p>уже есть аккаунт? <router-link to="/login">войти</router-link></p>
+        </div>
+      </template>
+      <template #button>
+        <la-button
+          :disabled="isButtonDisabled"
+          variation="transparent"
+          size="xl"
+        >
+          зарегистрироваться
+        </la-button>
+      </template>
     </la-modal>
   </form>
 </template>
 
 <style scoped>
 .registration-form {
-  @apply bg-started-page bg-center bg-cover bg-no-repeat h-[100vh];
-}
-
-.registration-form__error {
-  @apply text-red-600;
+  @apply flex justify-center items-center bg-started-page bg-center bg-cover bg-no-repeat h-[100vh] w-full;
 }
 
 .registration-form h1 {

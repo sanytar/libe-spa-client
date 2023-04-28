@@ -1,16 +1,21 @@
-import axios from 'axios';
+const baseURL = 'http://localhost:3000/';
 
-const $host = axios.create({
-  baseURL: 'http://localhost:3000/',
-});
+const postFetch = async (url: string, body:object) => {
+  return await fetch(baseURL + url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    },
+    body: JSON.stringify(body),
+  });
+};
 
-const $authHost = axios.create({
-  baseURL: 'http://localhost:3000/',
-});
+const getFetch = async (url: string) => {
+  return await fetch(baseURL + url, {
+    headers: {
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    },
+  });
+};
 
-$authHost.interceptors.request.use((config) => {
-  config.headers.authorization = `Bearer ${localStorage.getItem('token')}`;
-  return config;
-});
-
-export { $host, $authHost };
+export { postFetch, getFetch };

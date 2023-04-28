@@ -7,7 +7,7 @@ const navigationItems = [
   {
     id: 1,
     name: 'главная',
-    routeName: 'TrackList',
+    routeName: 'track-list',
   },
   {
     id: 2,
