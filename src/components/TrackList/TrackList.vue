@@ -70,6 +70,6 @@ const trackList = [
 }
 
 .track-list__tracks {
-  @apply flex justify-start items-start gap-2 max-w-7xl flex-wrap p-4;
+  @apply flex xl:justify-start justify-center items-start gap-2 max-w-7xl flex-wrap p-4;
 }
 </style>

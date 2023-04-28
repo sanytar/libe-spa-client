@@ -7,11 +7,31 @@ const store = useUserStore();
 const router = useRouter();
 
 const menuTextList = [
-  'добавить трек',
-  'профиль',
-  'плейлисты',
-  'мои треки',
-  'выйти',
+  {
+    id: 1,
+    routeName: 'track-adding',
+    value: 'добавить трек',
+  },
+  {
+    id: 2,
+    routeName: 'track-list',
+    value: 'профиль',
+  },
+  {
+    id: 3,
+    routeName: 'playlists',
+    value: 'плейлисты',
+  },
+  {
+    id: 4,
+    routeName: 'track-list',
+    value: 'мои треки',
+  },
+  {
+    id: 5,
+    routeName: 'login',
+    value: 'выйти',
+  },
 ];
 
 const isMenuOpened = ref(false);
@@ -23,11 +43,9 @@ const classList = computed(() => {
   };
 });
 
-const logOut = (item: string) => {
-  if (item === 'выйти') {
-    store.logOut();
-    router.push({ name: 'login' });
-  }
+const goToSelectedRoute = (routeName: string) => {
+  if (routeName === 'login') store.logOut();
+  router.push({ name: routeName });
 };
 </script>
 
@@ -40,9 +58,9 @@ const logOut = (item: string) => {
         <li
           v-for="(item, index) of menuTextList"
           :key="index"
-          @click="logOut(item)"
+          @click="goToSelectedRoute(item.routeName)"
         >
-          <p>{{ item }}</p>
+          <p>{{ item.value }}</p>
         </li>
       </ul>
     </transition>

@@ -45,9 +45,9 @@ const logIn = async () => {
     try {
       const user: User = await login(authForm.value);
       store.authUser(user);
-      router.push({ name: 'TrackList' });
-    } catch (e: any) {
-      errorMessage.value = e.response.data.message;
+      router.push({ name: 'track-list' });
+    } catch (e) {
+      errorMessage.value = e as string;
     }
   }
 };
@@ -56,9 +56,11 @@ const logIn = async () => {
 <template>
   <form class="auth-form" @submit.prevent="logIn">
     <la-modal>
-      <h1>авторизация</h1>
-      <la-error v-if="errorMessage">{{ errorMessage }}</la-error>
-      <div class="auth-form__inputs">
+      <template #header>авторизация</template>
+      <template #error>
+        <la-error v-if="errorMessage">{{ errorMessage }}</la-error>
+      </template>
+      <template #inputs>
         <la-input
           id="email"
           v-model="authForm.email"
@@ -69,46 +71,40 @@ const logIn = async () => {
           :type="inputType"
           placeholder="введите свой пароль"
         />
-      </div>
-      <span v-if="v$.$errors[0]" class="auth-form__validate-errors">
-        <transition-group name="list" tag="div">
-          <div v-for="error in v$.$errors" :key="error.$uid">
-            {{ error.$property }} - {{ error.$message }}
-          </div>
-        </transition-group>
-      </span>
-      <div class="auth-form__fieldset">
-        <la-checkbox v-model="passwordVisible">показать пароль</la-checkbox>
-        <p>
-          ещё не с нами?
-          <router-link to="/registration">присоединяйся</router-link>
-        </p>
-      </div>
-      <la-button
-        :disabled="isButtonDisabled"
-        variation="transparent"
-      >
-        войти
-      </la-button>
+      </template>
+      <template #validate-errors>
+        <span v-if="v$.$errors[0]" class="auth-form__validate-errors">
+          <transition-group name="list" tag="div">
+            <div v-for="error in v$.$errors" :key="error.$uid">
+              {{ error.$property }} - {{ error.$message }}
+            </div>
+          </transition-group>
+        </span>
+      </template>
+      <template #fieldset>
+        <div class="auth-form__fieldset">
+          <la-checkbox v-model="passwordVisible">показать пароль</la-checkbox>
+          <p>
+            ещё не с нами?
+            <router-link to="/registration">присоединяйся</router-link>
+          </p>
+        </div>
+      </template>
+      <template #button>
+        <la-button
+          :disabled="isButtonDisabled"
+          variation="transparent"
+        >
+          войти
+        </la-button>
+      </template>
     </la-modal>
   </form>
 </template>
 
 <style scoped>
 .auth-form {
-  @apply bg-started-page bg-center bg-cover bg-no-repeat h-[100vh];
-}
-
-.auth-form__error {
-  @apply text-red-600;
-}
-
-.auth-form h1 {
-  @apply text-4xl font-semibold select-none;
-}
-
-.auth-form__inputs {
-  @apply flex flex-col gap-3 w-full;
+  @apply flex justify-center items-center bg-started-page bg-center bg-cover bg-no-repeat h-[100vh] w-full;
 }
 
 .auth-form__validate-errors {
